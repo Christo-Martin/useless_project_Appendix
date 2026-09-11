@@ -1,6 +1,8 @@
 import os
 import numpy as np
 import soundfile as sf
+import torch
+import gc
 import librosa
 from TTS.api import TTS
 
@@ -18,6 +20,10 @@ def main():
 
     print("Step 1: Aligning original audio...")
     segments, language = align_audio(SOURCE_AUDIO, device=DEVICE)
+
+    # Free WhisperX's GPU memory before loading XTTS
+    torch.cuda.empty_cache()
+    gc.collect()
 
     print("Step 2: Loading XTTS...")
     tts = TTS('tts_models/multilingual/multi-dataset/xtts_v2').to(DEVICE)
