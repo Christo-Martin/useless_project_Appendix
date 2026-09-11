@@ -2,26 +2,36 @@
 
 
 
-# [Project Name] 🎯
+# Murmur Tom🎯
 
 
 ## Basic Details
-### Team Name: [Name]
+### Team Name: Appendix
 
 
 ### Team Members
-- Team Lead: [Name] - [College]
-- Member 2: [Name] - [College]
-- Member 3: [Name] - [College]
+- Team Lead: Christo Martin - NSS College of Engineering
+- Member 2: Ardra A. R. - NSS College of Engineering
 
 ### Project Description
-[2-3 lines about what your project does]
+A prosody-preserving content substitution system that makes your media say something (or nothing)  — while keeping the same rhythm, timing, and feel.
 
 ### The Problem (that doesn't exist)
-[What ridiculous problem are you solving?]
+Have you ever been peacefully listening to something when, all of a sudden, the words start making **sense**?
+
+Now you're forced to process them. Understand them. Maybe even *think* about them.
+
+Murmur Tom puts an end to this terrible burden.
+
+[//]: # Placeholder name
+
 
 ### The Solution (that nobody asked for)
-[How are you solving it? Keep it fun!]
+We asked ourselves: What if speech could sound exactly like speech, without having the audacity to mean anything?
+
+Murmur Tom takes ordinary human speech, throws away the meaning, and reconstructs it as convincing gibberish while preserving its rhythm, timing, pauses, and expressive flow.
+
+All the talking. None of the information.
 
 ## Technical Details
 ### Technologies/Components Used
