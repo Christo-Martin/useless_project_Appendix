@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.pyc
+
+# Virtual env (if it's inside the project — yours is at ~/dub-env so probably not, but just in case)
+dub-env/
+venv/
+
+
+
+# Model caches (if any get created locally)
+*.pth
+*.bin
+*.ckpt
+
+# OS/editor junk
+.vscode/
+.DS_Store
