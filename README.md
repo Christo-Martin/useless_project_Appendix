@@ -18,7 +18,6 @@
 
 ### The Problem (that doesn't exist)
 Have you ever been peacefully listening to something when, all of a sudden, the words start making **sense**?
-
 Now you're forced to process them. Understand them. Maybe even *think* about them.
 
 The Mumble Box puts an end to this terrible burden.
@@ -64,7 +63,7 @@ The Mumble Box takes ordinary human speech, **throws away the meaning**, and rec
 ┌─────────────────────────────────────────────────────────────┐
 │                        MURMOR TOM                           │
 │                                                             │
-│   Input WAV ──► WhisperX ──► aligned_segments.json         │
+│   Input WAV ──► WhisperX ──► aligned_segments.json          │
 │                  (align.py / run_align.py)                  │
 │                                │                            │
 │                                ▼                            │
@@ -85,7 +84,7 @@ The Mumble Box takes ordinary human speech, **throws away the meaning**, and rec
 │              timestamp in the output track                  │
 │                                │                            │
 │                                ▼                            │
-│                         Output WAV 🎉                        │
+│                         Output WAV 🎉                       │
 └─────────────────────────────────────────────────────────────┘
 ```
 
