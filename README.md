@@ -151,13 +151,12 @@ The slider value (1–5) is sent as a form field `level` to `POST /process`, whi
 
 #### Screenshots
 
-> *(Add screenshots of the web UI here)*
-
-| View | Description |
-|------|-------------|
-| `screenshot_upload.png` | Drop-zone + audio preview before processing |
-| `screenshot_processing.png` | Terminal log during synthesis |
-| `screenshot_results.png` | Side-by-side comparison of original vs. gibberish |
+<img src="imgs/Opening.png" alt="Opening screen">
+ > Drop-zone + audio preview before processing 
+<img src="imgs/Processing.png" alt="Processing">
+>Terminal log during synthesis
+<img src="imgs/Out.png" alt= "Output">
+>Side-by-side comparison of original vs. gibberish 
 
 #### Architecture Diagram
 
@@ -181,7 +180,8 @@ Browser (GitHub Pages)
 
 ### Project Demo
 
-> *(Add your demo video link here)*
+<a href="https://drive.google.com/file/d/1ggbsx-MolcH3qAeivBEjA1hC0l-wYxAJ/view?usp=sharing">Demo video</a>
+
 
 **What the demo shows:**
 - Uploading a short voice clip
