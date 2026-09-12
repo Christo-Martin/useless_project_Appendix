@@ -191,8 +191,8 @@ Browser (GitHub Pages)
 ---
 
 ## Team Contributions
-- **Christo Martin** — Pipeline architecture, WhisperX alignment, FastAPI server, frontend (UI/JS)
-- **Ardra A. R.** — XTTS voice-cloning integration, gibberish generation algorithm, testing & QA
+- **Christo Martin** — Pipeline architecture, WhisperX alignment, gibberish generation algorithm, XTTS voice-cloning integration
+- **Ardra A. R.** — ,  frontend (UI/JS), testing & QA,  FastAPI server
 
 ---
 
