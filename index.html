@@ -1,1 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MURMOR TOM 3000 — Meaning Extraction Engine</title>
+    <meta name="description" content="AI-powered speech with absolutely nothing to say. Turn meaningful human communication into completely unnecessary noises.">
+    
+    <!-- Google Fonts: Space Grotesk & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;1,400&family=Space+Grotesk:wght@500;700;900&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="crt-overlay"></div>
 
+    <div class="app-container">
+        <!-- HEADER / BRANDING -->
+        <header class="machine-header">
+            <div class="header-badge">
+                <span class="warning-stripe"></span>
+                <span class="badge-text">EXPERIMENTAL LAB UNIT #892</span>
+                <span class="status-dot pulsing"></span>
+                <span class="badge-status">SYSTEM READY</span>
+            </div>
+            
+            <h1 class="main-title">
+                MURMOR TOM <span class="version-tag">v3.0</span>
+            </h1>
+            <p class="tagline">"AI-powered speech with absolutely nothing to say."</p>
+            <p class="sub-tagline">Turn meaningful human communication into completely unnecessary noises.</p>
+            
+            <div class="quote-ticker">
+                <span class="ticker-label">STATUS QUOTE:</span>
+                <span id="random-quote" class="ticker-content">"Your words are safe. We have destroyed them."</span>
+            </div>
+        </header>
+
+        <!-- MAIN MACHINE PANEL -->
+        <main class="lab-grid">
+            
+            <!-- LEFT PANEL: INPUT CONTROL CENTER -->
+            <section class="panel control-panel">
+                <div class="panel-header">
+                    <h2>01 // SPEECH INTAKE CHAMBER</h2>
+                    <span class="panel-subtitle">Provide Human Noises Below</span>
+                </div>
+
+                <!-- DRAG & DROP / UPLOAD AREA -->
+                <div class="drop-zone" id="drop-zone">
+                    <div class="drop-zone-icon">🎙️</div>
+                    <div class="drop-zone-title">DROP SOME WORDS HERE</div>
+                    <p class="drop-zone-desc">Drag & drop <code>.wav</code> or <code>.mp3</code>, or click to browse</p>
+                    <input type="file" id="file-input" accept="audio/*" hidden>
+                </div>
+
+                <div class="input-actions">
+                    <button id="btn-record" class="btn btn-primary">
+                        <span class="btn-icon">🔴</span>
+                        <span id="record-text">Record Microphone</span>
+                    </button>
+                    <button id="btn-sample" class="btn btn-secondary">
+                        <span class="btn-icon">⚡</span>
+                        <span>Load Test Sample (Harvard)</span>
+                    </button>
+                </div>
+
+                <!-- AUDIO PREVIEW INPUT -->
+                <div id="input-preview-card" class="audio-card hidden">
+                    <div class="card-label">INPUT AUDIO LOADED</div>
+                    <audio id="audio-input-player" controls></audio>
+                </div>
+
+                <!-- USELESSNESS SLIDER -->
+                <div class="slider-group">
+                    <div class="slider-header">
+                        <label for="useless-slider">MEANING DESTRUCTION LEVEL</label>
+                        <span id="slider-level-text" class="slider-badge">CONFUSING</span>
+                    </div>
+                    <input type="range" id="useless-slider" min="1" max="5" step="1" value="3">
+                    <div class="slider-ticks">
+                        <span>HUMAN</span>
+                        <span>CONFUSING</span>
+                        <span>GIBBERISH</span>
+                        <span>MURMOR</span>
+                        <span>WHY?</span>
+                    </div>
+                </div>
+
+                <!-- PROCESS BUTTON -->
+                <button id="btn-process" class="btn btn-dramatic" disabled>
+                    <span class="btn-glow"></span>
+                    <span class="btn-text">EXTRACT MEANING (MAKE USELESS)</span>
+                </button>
+            </section>
+
+            <!-- RIGHT PANEL: PROCESSING & MONITORING -->
+            <section class="panel monitor-panel">
+                <div class="panel-header">
+                    <h2>02 // DESTRUCTIVE SYNTHESIS CHAMBER</h2>
+                    <span class="panel-subtitle">Real-time Meaning Elimination</span>
+                </div>
+
+                <!-- AUDIO VISUALIZER CANVAS -->
+                <div class="visualizer-container">
+                    <canvas id="waveform-canvas"></canvas>
+                    <div class="canvas-overlay-text" id="canvas-status">AWAITING AUDIO INPUT</div>
+                    <div class="vu-meters">
+                        <div class="vu-channel">
+                            <span class="vu-label">L</span>
+                            <div class="vu-bar"><div class="vu-fill" id="vu-l"></div></div>
+                        </div>
+                        <div class="vu-channel">
+                            <span class="vu-label">R</span>
+                            <div class="vu-bar"><div class="vu-fill" id="vu-r"></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DRAMATIC PROCESSING LOG -->
+                <div id="processing-box" class="processing-terminal hidden">
+                    <div class="terminal-bar">
+                        <span class="terminal-title">TERMINAL // PROSODY_EXTRACTOR.EXE</span>
+                        <span class="terminal-spinner"></span>
+                    </div>
+                    <div class="terminal-body" id="terminal-log">
+                        <div class="log-line text-dim">> Initializing neural nonsense parser...</div>
+                    </div>
+                </div>
+
+                <!-- RESULTS CONTAINER -->
+                <div id="results-section" class="results-grid hidden">
+                    
+                    <!-- METERS & SCORES -->
+                    <div class="stats-row">
+                        <div class="stat-box">
+                            <div class="stat-title">MEANING METER</div>
+                            <div class="meter-track">
+                                <div id="meaning-bar" class="meter-fill" style="width: 0%;"></div>
+                            </div>
+                            <div class="stat-footer">
+                                <span id="meaning-percent">0%</span>
+                                <span id="meaning-label" class="stat-desc">"Perfect."</span>
+                            </div>
+                        </div>
+
+                        <div class="stat-box uselessness-box">
+                            <div class="stat-title">USELESSNESS SCORE</div>
+                            <div id="uselessness-score" class="score-number">98.7%</div>
+                            <button id="btn-more-useless" class="btn btn-xs">
+                                💥 MAKE IT EVEN MORE USELESS
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- COMPARISON TRANSCRIPT -->
+                    <div class="transcript-comparison">
+                        <div class="transcript-col original-col">
+                            <div class="col-header">
+                                <span class="col-icon">🔊</span>
+                                <h3>ORIGINAL HUMAN NONSENSE</h3>
+                            </div>
+                            <audio id="audio-orig-player" controls></audio>
+                            <div class="transcript-box">
+                                <div class="box-label">TRANSCRIBED WORDS:</div>
+                                <p id="text-original" class="transcript-text">"The stale smell of old beer lingers..."</p>
+                            </div>
+                        </div>
+
+                        <div class="transformation-arrow">➔</div>
+
+                        <div class="transcript-col murmor-col">
+                            <div class="col-header">
+                                <span class="col-icon">🤖</span>
+                                <h3>MURMOR TOM HAS REMOVED MEANING</h3>
+                            </div>
+                            <audio id="audio-output-player" controls></audio>
+                            <div class="transcript-box gibberish-box">
+                                <div class="box-label">PURIFIED GIBBERISH:</div>
+                                <p id="text-gibberish" class="transcript-text gibberish-text">"Duh stal smay o o beer lenge..."</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </section>
+        </main>
+
+        <!-- FOOTER / ABSURD DISCLAIMERS -->
+        <footer class="machine-footer">
+            <div class="footer-callout">
+                <p><strong>WHY DID WE BUILD THIS?</strong> Some people like background speech to sleep, but meaningful words activate the brain. Murmor Tom preserves voice, timing & emotion while eliminating 100% of useful information.</p>
+            </div>
+            <div class="footer-meta">
+                <span>Useless Projects Hackathon 3.0</span> •
+                <span>Team Appendix (Christo Martin & Ardra A. R.)</span> •
+                <span>Preserving the voice. Eliminating the point.</span>
+            </div>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

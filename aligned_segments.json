@@ -1,0 +1,35 @@
+{
+  "language": "en",
+  "segments": [
+    {
+      "text": " The stale smell of old beer lingers.",
+      "start": 1.363,
+      "end": 3.565
+    },
+    {
+      "text": "It takes heat to bring out the odor.",
+      "start": 4.466,
+      "end": 6.268
+    },
+    {
+      "text": "A cold dip restores health and zest.",
+      "start": 7.089,
+      "end": 9.411
+    },
+    {
+      "text": "A salt pickle tastes fine with ham.",
+      "start": 10.052,
+      "end": 12.094
+    },
+    {
+      "text": "Tacos al pastor are my favorite.",
+      "start": 12.675,
+      "end": 14.477
+    },
+    {
+      "text": "A zestful food is the hot cross bun.",
+      "start": 15.197,
+      "end": 17.48
+    }
+  ]
+}
