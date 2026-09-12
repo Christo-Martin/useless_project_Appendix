@@ -1,12 +1,12 @@
 import json
 from align import align_audio
 
-SOURCE_AUDIO = 'test.wav'
+SOURCE_AUDIO = '../test.wav'
 OUTPUT_JSON = 'aligned_segments.json'
 
 segments, language = align_audio(SOURCE_AUDIO, device='cuda')
 
-# convert numpy floats to plain floats for JSON serialization
+# convert numpy floats to plain floats for JSO  N serialization
 clean_segments = []
 for seg in segments:
     clean_segments.append({

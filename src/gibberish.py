@@ -18,9 +18,16 @@ def count_syllables(word: str) -> int:
         return 1
     groups = VOWEL_GROUPS.findall(word)
     count = len(groups)
-    # silent trailing 'e' correction
-    if word.endswith('e') and count > 1:
+
+    # silent trailing 'e' (but not syllabic "-le" as in table/little/apple)
+    if word.endswith('e') and not word.endswith('le') and count > 1:
         count -= 1
+
+    # regular "-ed" past tense is usually silent (walked, used, hoped, blessed)
+    # unless it follows a t/d sound, where it's a real syllable (wanted, started)
+    if word.endswith('ed') and not word.endswith(('ted', 'ded')) and count > 1:
+        count -= 1
+
     return max(1, count)
 
 
