@@ -1,8 +1,9 @@
 import json
 from align import align_audio
 
-SOURCE_AUDIO = '../test.wav'
-OUTPUT_JSON = 'aligned_segments.json'
+
+SOURCE_AUDIO = '../test_audios/harv-test.wav'
+OUTPUT_JSON = '../aligned_segments.json'
 
 segments, language = align_audio(SOURCE_AUDIO, device='cuda')
 

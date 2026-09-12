@@ -1,7 +1,7 @@
 import whisperx
 
 device = 'cuda'
-audio = whisperx.load_audio('harv-test.wav')
+audio = whisperx.load_audio('../test_audios/harv-test.wav')
 model = whisperx.load_model('small', device, compute_type='float16')
 result = model.transcribe(audio, batch_size=8)
 print('detected language:', result['language'])

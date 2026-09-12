@@ -7,9 +7,9 @@ from TTS.api import TTS
 
 from gibberish import gibberish_for_segment
 
-SOURCE_AUDIO = 'test.wav'
-INPUT_JSON = 'aligned_segments.json'
-OUTPUT_AUDIO = 'dubbed_output.wav'
+SOURCE_AUDIO = '../test_audios/harv-test.wav'
+INPUT_JSON = '../aligned_segments.json'
+OUTPUT_AUDIO = '../output_audios/dubbed_output.wav'
 DEVICE = 'cuda'
 TEMP_DIR = 'temp_segments'
 

@@ -25,7 +25,7 @@ def align_audio(audio_path: str, device: str = 'cuda', model_size: str = 'small'
     return result['segments'], language
 
 if __name__ == '__main__':
-    segments, lang = align_audio('test.wav')
+    segments, lang = align_audio('../test_audios/harv-test.wav')
     print(f"Language: {lang}")
     for seg in segments:
         print(f"[{seg['start']:.2f}-{seg['end']:.2f}] {seg['text']}")
