@@ -22,6 +22,9 @@ const SLIDER_LABELS = {
     5: 'WHY DID WE BUILD THIS'
 };
 
+// Backend URL — change this if your server runs on a different port
+const API_BASE = 'http://localhost:8000';
+
 const DRAMATIC_STEPS = [
     "Listening to human conversation...",
     "Transcribing semantic content...",
@@ -35,13 +38,14 @@ const DRAMATIC_STEPS = [
 ];
 
 // App State
-let loadedAudioFile = null;
-let loadedAudioUrl = null;
-let mediaRecorder = null;
-let recordedChunks = [];
-let isRecording = false;
-let audioCtx = null;
-let analyserNode = null;
+let loadedAudioFile  = null;
+let loadedAudioUrl   = null;
+let currentLevel     = 3;       // kept in sync with the slider
+let mediaRecorder    = null;
+let recordedChunks   = [];
+let isRecording      = false;
+let audioCtx         = null;
+let analyserNode     = null;
 let animationFrameId = null;
 
 // DOM Elements
@@ -168,12 +172,15 @@ function initMicRecorder() {
 // Uselessness Level Slider
 function initSlider() {
     const slider = document.getElementById('useless-slider');
-    const badge = document.getElementById('slider-level-text');
+    const badge  = document.getElementById('slider-level-text');
 
-    slider.addEventListener('input', (e) => {
-        const val = e.target.value;
-        badge.textContent = SLIDER_LABELS[val] || 'CONFUSING';
-    });
+    const update = () => {
+        currentLevel      = parseInt(slider.value, 10);
+        badge.textContent = SLIDER_LABELS[currentLevel] || 'CONFUSING';
+    };
+
+    slider.addEventListener('input', update);
+    update(); // set initial label on page load
 }
 
 // Pre-loaded Repository Sample ("Harvard Sentences")
@@ -221,46 +228,71 @@ function initProcessButton() {
 }
 
 async function finishProcessing() {
-    const processBtn = document.getElementById('btn-process');
+    const processBtn     = document.getElementById('btn-process');
     const resultsSection = document.getElementById('results-section');
     const origAudioPlayer = document.getElementById('audio-orig-player');
-    const outAudioPlayer = document.getElementById('audio-output-player');
-    const origText = document.getElementById('text-original');
-    const gibText = document.getElementById('text-gibberish');
+    const outAudioPlayer  = document.getElementById('audio-output-player');
+    const origText        = document.getElementById('text-original');
+    const gibText         = document.getElementById('text-gibberish');
+    const terminalLog     = document.getElementById('terminal-log');
 
-    // Try backend API first, or fallback to repo pre-processed outputs
-    let originalAudio = loadedAudioUrl || 'test_audios/harv-test.wav';
-    let outputAudio = 'output_audios/dubbed_output.wav';
-    let inputTranscript = "The stale smell of old beer lingers. It takes heat to bring out the odor.";
-    let gibberishOutput = "Duh stal smay o o beer lenge. Et tak heat tu breng u th odor.";
+    const addLog = (msg, cls = 'active') => {
+        const line = document.createElement('div');
+        line.className = `log-line ${cls}`;
+        line.textContent = msg;
+        terminalLog.appendChild(line);
+        terminalLog.scrollTop = terminalLog.scrollHeight;
+    };
 
-    try {
-        if (loadedAudioFile) {
-            // Send to live server if running
-            const formData = new FormData();
-            formData.append('file', loadedAudioFile);
-            const response = await fetch('/api/process-audio', { method: 'POST', body: formData });
-            if (response.ok) {
-                const data = await response.json();
-                outputAudio = data.output_url || outputAudio;
-                inputTranscript = data.original_text || inputTranscript;
-                gibberishOutput = data.gibberish_text || gibberishOutput;
+    // Show original audio
+    const originalAudio = loadedAudioUrl || 'test_audios/harv-test.wav';
+    origAudioPlayer.src = originalAudio;
+
+    if (loadedAudioFile) {
+        // ── Live server path ────────────────────────────────────────────
+        addLog(`> Sending to server at level ${currentLevel} — ${SLIDER_LABELS[currentLevel]}...`);
+
+        const formData = new FormData();
+        formData.append('file', loadedAudioFile);  // the audio
+        formData.append('level', currentLevel);     // slider value (1-5)
+
+        try {
+            const response = await fetch(`${API_BASE}/process`, {
+                method: 'POST',
+                body: formData,
+            });
+
+            if (!response.ok) {
+                const err = await response.text();
+                throw new Error(`Server error ${response.status}: ${err}`);
             }
+
+            const outBlob = await response.blob();
+            outAudioPlayer.src = URL.createObjectURL(outBlob);
+            origText.textContent = '"(original audio above)"';
+            gibText.textContent  = `"(level ${currentLevel} — ${SLIDER_LABELS[currentLevel]})"`;
+            addLog('> Done! Meaning successfully eliminated.');
+
+        } catch (err) {
+            addLog(`> Server unreachable — using pre-processed sample.`);
+            addLog(`  (${err.message})`);
+            // Graceful fallback: play the pre-processed sample from the repo
+            outAudioPlayer.src = 'output_audios/dubbed_output.wav';
+            origText.textContent = '"The stale smell of old beer lingers..."';
+            gibText.textContent  = '"(pre-processed sample — start server for live processing)"';
         }
-    } catch (e) {
-        console.log("No live backend active, using pre-processed sample / mock outputs.");
+
+    } else {
+        // ── Static demo path (no file uploaded, GitHub Pages) ──────────
+        addLog('> No file uploaded — loading pre-processed sample...');
+        outAudioPlayer.src   = 'output_audios/dubbed_output.wav';
+        origText.textContent = '"The stale smell of old beer lingers. It takes heat to bring out the odor."';
+        gibText.textContent  = '"Duh stal smay o o beer lenge. Et tak heat tu breng u th odor."';
+        addLog('> Sample loaded.');
     }
 
-    origAudioPlayer.src = originalAudio;
-    outAudioPlayer.src = outputAudio;
-    origText.textContent = `"${inputTranscript}"`;
-    gibText.textContent = `"${gibberishOutput}"`;
-
-    // Show results
     resultsSection.classList.remove('hidden');
     processBtn.disabled = false;
-
-    // Animate Meaning Meter
     animateMeaningMeter();
 }
 
